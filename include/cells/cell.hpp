@@ -5,27 +5,10 @@
 #include "../state.hpp"
 #include "../vicinity.hpp"
 
-/// Extra configuration for cell model (remove this if you don't need it)
-struct CellConfig {
-	CellConfig() {}
-};
-
-/**
- * We need to implement the from_json method for the desired cell configuration struct.
- * Otherwise, Cadmium will not be able to understand the JSON configuration file.
- * You can remove this if you don't need extra configuration parameters.
- * @param j Chunk of JSON file that represents a cell configuration.
- * @param c cell configuration struct to be filled with the configuration shown in the JSON file.
- */
-void from_json(const nlohmann::json& j, CellConfig& c) {}
-
  class CellTemplate : public cadmium::celldevs::GridCell<State, Vicinity> {
-	 CellConfig cellConfig;   /// additional cell configuration (remove it if you don't need it)
  public:
-	 CellTemplate(const std::vector<int>& id, const std::shared_ptr<const cadmium::celldevs::GridCellConfig<State, Vicinity>>& config):
+	 CellTemplate(const std::vector<int>& id, const std::shared_ptr<const cadmium::celldevs::GridCellConfig<State, Vicinity>>& config):`
 	   cadmium::celldevs::GridCell<State, Vicinity>(id, config), cellConfig() {
-		 //  addInPort<int>("inPort1");  // You can add input ports if needed
-		 config->rawCellConfig.get_to(cellConfig);  // remove this if you don't need additional cell configuration
 	 }
 
 	 /**
