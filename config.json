@@ -7,24 +7,28 @@
     "default": {
       "delay": "transport",
       "cell_type": "Evac",
-      "state": {"exitProximity": 0, "type": 0, "nextDestination": 0},
+      "state": {"exitProximity": 0.0, "type": 0, "nextDestination": 0, "directionIncoming": 0, "sigma": 0.0},
       "neighborhood": [
         {
-          "type": "manhattan",
-          "range": 1,
-          "vicinity": {
-          }
-        }
+          "type": "relative",
+          "vicinity": 0.25,
+		  "neighbors": [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 1], [1, -1], [1, 0], [1, 1]]
+        },
+		{
+		  "type": "relative",
+		  "vicinity": 1,
+		  "neighbors": [[0, 0]]
+		}
       ]
     },
     "Obstacles": {
-      "state": {"exitProximity": 500, "type": 3},
+      "state": {"exitProximity": 500, "type": 2},
       "cell_map": [[0, 0], [0, 1], [0, 2], [0, 3], [0, 4], [1, 0], [1, 4], [2, 0], [2, 4], [3, 0], [3, 4], [4, 0], [4, 1], [4, 3], [4, 4]]
-    }
+    },
 	"Doors": {
-	  "state": {"exitProximity": 1, "type": 2},
+	  "state": {"exitProximity": 1},
 	  "cell_map": [[4, 2]]
-	}
+	},
 	"People": {
 	  "state": {"type": 1},
 	  "cell_map": [[2, 2], [3, 2]]

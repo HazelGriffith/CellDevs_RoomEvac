@@ -1,7 +1,7 @@
 #ifndef CADMIUM_TEMPLATE_CELLDEVS_ASYMM_VICINITY_HPP_
 #define CADMIUM_TEMPLATE_CELLDEVS_ASYMM_VICINITY_HPP_
 
-#include "nlohmann/json.hpp"
+#include <nlohmann/json.hpp>
 
 /// This structure contains all the fields that belong to the vicinity factor.
 struct Vicinity {
