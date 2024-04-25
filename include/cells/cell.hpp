@@ -217,7 +217,7 @@ namespace RoomEvac{
 							}
 						}
 					} else if ((state.type == 0)&&(state.directionIncoming == 0)){
-						if (neighborState->type == 1) {
+						if ((neighborState->type == 1)&&(neighborState->exitProximity > state.exitProximity)) {
 							if (neighborState->nextDestination != 0){
 								switch(relRow){
 									case -1:
@@ -311,20 +311,24 @@ namespace RoomEvac{
 					if (!emptyNeighbors.empty()){
 						vector<int> destinations;
 						float minimumEP = *min_element(eps.begin(), eps.end());
-						for(int i = 0; i < emptyNeighbors.size(); i++) {
-							if (emptyNeighbors[i].exitProximity == minimumEP){
-								destinations.push_back(emptyNeighbors[i].direction);
+						if (minimumEP < state.exitProximity){
+							for(int i = 0; i < emptyNeighbors.size(); i++) {
+								if (emptyNeighbors[i].exitProximity == minimumEP){
+									destinations.push_back(emptyNeighbors[i].direction);
+								}
 							}
-						}
-						if ((destinations.size() > 1)&&(destinations.size() < 9)){
-							unsigned seed1 = chrono::system_clock::now().time_since_epoch().count();
-							minstd_rand0 generator(seed1);
-							uniform_int_distribution<> distrib(0, destinations.size()-1);
-							state.nextDestination = destinations[distrib(generator)];
-						} else if (destinations.size() == 1){
-							state.nextDestination = destinations[0];
+							if ((destinations.size() > 1)&&(destinations.size() < 9)){
+								unsigned seed1 = chrono::system_clock::now().time_since_epoch().count();
+								minstd_rand0 generator(seed1);
+								uniform_int_distribution<> distrib(0, destinations.size()-1);
+								state.nextDestination = destinations[distrib(generator)];
+							} else if (destinations.size() == 1){
+								state.nextDestination = destinations[0];
+							} else {
+								assert(("Not a possible number of destinations", false));
+							}
 						} else {
-							assert(("Not a possible number of destinations", false));
+							state.nextDestination = 0;
 						}
 					} else {
 						state.nextDestination = 0;
